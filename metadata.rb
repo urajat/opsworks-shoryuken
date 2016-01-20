@@ -1,4 +1,5 @@
-name        "sidekiq"
-description "Sidekiq receipes for Opsworks Ubuntu"
-maintainer  "Brainy Atom"
+name        "opsworks-shoryuken"
+description "Shoryuken receipes for Opsworks Ubuntu"
+maintainer  "Andy Turner"
+maintainer_email "carpetto@gmail.com"
 version     "1.0.0"
