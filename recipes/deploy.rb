@@ -3,6 +3,7 @@ node[:deploy].each do |application, deploy|
     shoryuken_config = deploy['shoryuken']
     release_path = ::File.join(deploy[:deploy_to], 'current')
     start_command = shoryuken_config['start_command'] || "bundle exec shoryuken -e production -C config/shoryuken.yml -r ./config/boot.rb 2>&1 >> log/shoryuken.log"
+    rails_env = deploy[:rails_env]
     env = deploy['environment_variables'] || {}
 
     template "setup shoryuken.conf" do
@@ -16,6 +17,7 @@ node[:deploy].each do |application, deploy|
         user: deploy[:user],
         group: deploy[:group],
         release_path: release_path,
+        rails_env: rails_env,
         start_command: start_command,
         env: env,
       })
