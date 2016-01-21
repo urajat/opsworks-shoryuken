@@ -5,13 +5,11 @@ Opsworks shoryuken cookbook for Ubuntu and Rails or non-rails shoryuken deploys
 
 ## Installation instructions
 
-1) Make sure you have Redis installed.  This cookbook seems decent: https://github.com/brianbianco/redisio
+1) Add this cookbook to your list of Custom Cookbooks
 
-2) Add this cookbook to your list of Custom Cookbooks
+2) Add the deploy recipe in this cookbook to your Application's Deploy custom recipe.  This should be place AFTER your application is deployed to ensure shoryuken uses the new code checked out.
 
-3) Add the deploy recipe in this cookbook to your Application's Deploy custom recipe.  This should be place AFTER your application is deployed to ensure shoryuken uses the new code checked out.
-
-4) Configure your shoryuken custom JSON to specify shoryuken should be deployed with this app:
+3) Configure your shoryuken custom JSON to specify shoryuken should be deployed with this app:
 
 
 ### Supported Options
@@ -25,19 +23,19 @@ The command to start shoryuken.  This will run relative to the root of the curre
 Defaults to:
 
 ```bash
-bundle exec shoryuken -e production -C config/shoryuken.yml -r ./config/boot.rb 2>&1 >> log/shoryuken.log
+bundle exec shoryuken -R -C config/shoryuken.yml 2>&1 >> log/shoryuken.log
 ```
 
 ### Sample Chef JSON configuration
 
-Here is an example Custom JSON which overrides overrides the start_command to set the shoryuken environment to staging:
+Here is an example Custom JSON which overrides overrides the start_command to not load the Rails application and read workers from a boot.rb file:
 
 ```json
 {
   "deploy": {
     "YOURAPPNAME": {
       "shoryuken": {
-        "start_command": "bundle exec shoryuken -e staging -C config/shoryuken.yml -r ./config/boot.rb 2>&1 >> log/shoryuken.log"
+        "start_command": "bundle exec shoryuken -C config/shoryuken.yml -r ./config/boot.rb 2>&1 >> log/shoryuken.log"
       }
     }
   }
