@@ -2,8 +2,8 @@ node[:deploy].each do |application, deploy|
   if deploy['shoryuken']
     shoryuken_config = deploy['shoryuken']
     release_path = ::File.join(deploy[:deploy_to], 'current')
-    start_command = shoryuken_config['start_command'] || "bundle exec shoryuken -e production -C config/shoryuken.yml -r ./config/boot.rb 2>&1 >> log/shoryuken.log"
     rails_env = deploy[:rails_env]
+    start_command = shoryuken_config['start_command'] || "bundle exec shoryuken -R -C config/shoryuken.yml 2>&1 >> log/shoryuken.log"
     env = deploy['environment_variables'] || {}
 
     template "setup shoryuken.conf" do
